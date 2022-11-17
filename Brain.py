@@ -1,40 +1,31 @@
-# -*- coding: utf-8 -*-
 """
 Created on Sun Oct 18 18:24:08 2020
 
-@author: patri
+@author: Patrick Stock
 """
-import Vector as v, random
+import random
 
-class Brain():
-    
-    def __init__(self, size):
+from Vector import randomVector
+
+
+class Brain:
+
+    def __init__(self):
         self.vectors = []
-        self.size = size
-        for i in range(size):
-            self.vectors.append(v.Vector(0,0).randomVector(-2,2,-2,2))
-            # Makes a bunch of random vectors at first
-    
+
+    def __deepcopy__(self, memo=None):
+        copy = Brain()
+        copy.vectors = self.vectors.copy()
+        return copy
+
+    def addRandomVector(self):
+        self.vectors.append(randomVector(-2, 2, -2, 2))
+
     def cloneVectors(self):
-        '''clone = []
-        for i in range(self.size):
-            clone.append(self.vectors[i])
-        return clone'''
         return self.vectors.copy()
-    
-    def mutate(self, chance, step):
-        '''self.newVectors = []
-        for i in range(0, self.size): # Change size to step param when fixed
+
+    def mutate(self, chance):
+        for i in range(0, len(self.vectors)):
             rand = random.random()
-            if (rand < chance):
-                self.newVectors.append(v.Vector(0,0).randomVector(-2,2,-2,2))
-            else:
-                self.newVectors.append(self.vectors[i].copy())'''
-        
-        #self.newVectors.append(v.Vector(0,0).randomVector(-2,2,-2,2))
-        #self.vectors = self.newVectors
-        for i in range(0, self.size):
-            rand = random.random()
-            if (rand < chance):
-                self.vectors[i] = v.Vector(0,0).randomVector(-2,2,-2,2)
-        
+            if rand < chance:
+                self.vectors[i] = randomVector(-2, 2, -2, 2)
